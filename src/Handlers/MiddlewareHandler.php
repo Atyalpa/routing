@@ -5,10 +5,13 @@ declare(strict_types=1);
 namespace Atyalpa\Routing\Handlers;
 
 use Closure;
-use Exception;
+use InvalidArgumentException;
 
 class MiddlewareHandler
 {
+    /**
+     * @param array<string|Closure> $middlewares
+     */
     public function __construct(protected array $middlewares)
     {}
 
@@ -16,7 +19,7 @@ class MiddlewareHandler
     {
         return array_map(
             /**
-             * @throws Exception
+             * @throws InvalidArgumentException
              */
             function (string|Closure $middleware) {
                 if (is_callable($middleware)) {
@@ -27,7 +30,9 @@ class MiddlewareHandler
                     return new $middleware;
                 }
 
-                throw new Exception('Middleware should be a callable or a class FQN or a Closure');
+                throw new InvalidArgumentException(
+                    'Middleware should be a callable or a class FQN or a Closure'
+                );
             },
             $this->middlewares
         );
