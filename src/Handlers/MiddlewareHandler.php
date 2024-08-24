@@ -10,10 +10,9 @@ use InvalidArgumentException;
 class MiddlewareHandler
 {
     /**
-     * @param array<string|Closure> $middlewares
+     * @param  array<string|Closure>  $middlewares
      */
-    public function __construct(protected array $middlewares)
-    {}
+    public function __construct(protected array $middlewares) {}
 
     public function handle(): array
     {
