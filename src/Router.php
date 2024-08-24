@@ -16,7 +16,9 @@ use Closure;
 class Router
 {
     protected array $routes = [];
+
     protected string $prefix = '';
+
     protected array $middleware = [];
 
     public function __call($name, $arguments): self
@@ -26,13 +28,13 @@ class Router
 
     public function addRoute(string $method, string $uri, array|Closure $action): self
     {
-        $this->routes[$this->prefix . '/' . ltrim($uri, '/')] = [
+        $this->routes[$this->prefix.'/'.ltrim($uri, '/')] = [
             'method' => $method,
-            'uri' => $this->prefix . '/' . ltrim($uri, '/'),
+            'uri' => $this->prefix.'/'.ltrim($uri, '/'),
             'action' => [
                 'controller' => $action,
-                'middleware' => $this->middleware
-            ]
+                'middleware' => $this->middleware,
+            ],
         ];
 
         return $this;
